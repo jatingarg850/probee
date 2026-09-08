@@ -1,0 +1,40 @@
+# Line endings
+#
+# Without this file, a clone on Windows with the default `core.autocrlf=true`
+# gets CRLF in the working tree while Biome formats to LF — so `biome check`
+# failed on ~90 files that nobody had actually touched, and any contributor
+# who ran `--write` produced a diff of pure line-ending noise.
+#
+# `text=auto eol=lf` normalises every text file to LF in the repository AND in
+# the working tree, on every platform, regardless of each developer's
+# core.autocrlf setting. That matches Biome's default, so formatting is
+# reproducible everywhere.
+* text=auto eol=lf
+
+# Windows-only scripts genuinely need CRLF to run.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary — never touch these, and never try to diff them as text.
+*.glb binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.zip binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+*.task binary
+
+# Generated — collapse in pull-request diffs.
+bun.lock linguist-generated=true
+*.lock linguist-generated=true

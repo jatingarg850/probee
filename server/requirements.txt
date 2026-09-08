@@ -1,0 +1,19 @@
+fastapi>=0.100.0
+uvicorn>=0.20.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+agora-agents>=2.3.0
+# Enables httpx to route through a SOCKS proxy (e.g. all_proxy=socks5://...)
+socksio>=1.0.0
+httpx>=0.24.0
+# Gemini API for LLM
+google-generativeai>=0.3.0
+# Note: Murf AI is natively supported by agora-agents, no separate package needed
+# Required by FastAPI for File()/Form() (multipart) request parsing — used by /analyzeResume
+python-multipart>=0.0.9
+# Job scraping library
+python-jobspy>=1.1.79
+# Full job-posting scrape for the "Practice" flow (job_scraper.scrape_job_description) —
+# also a transitive dep of python-jobspy, declared directly since we import it ourselves
+beautifulsoup4>=4.12.0
+

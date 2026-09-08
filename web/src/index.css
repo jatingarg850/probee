@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * PROBE design tokens — one system, one identity.
+ *
+ * The app used to run two conflicting palettes: a dark/cyan token set here,
+ * and a light "editorial" palette hardcoded into the landing page and app
+ * shell. The result was white text on an off-white ground on half the
+ * routes. Everything now derives from the single warm, paper-and-ink
+ * palette below, so `bg-card` / `text-foreground` / `border-border` mean the
+ * same thing on every screen.
+ *
+ *   paper   #faf9f5  page ground
+ *   bone    #f0eee6  cards and raised surfaces
+ *   ink     #141413  headings, primary buttons
+ *   slate   #5e5d59  supporting copy
+ *   ember   #d97757  the single accent (terracotta)
+ *   noir    #030706  the landing page's inverted story sections
+ * ------------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+
+  --background: 48 33% 97%;
+  --surface: 45 25% 92%;
+  --surface-elevated: 45 22% 88%;
+
+  --card: 45 25% 92%;
+  --card-foreground: 60 3% 8%;
+  --popover: 48 40% 99%;
+  --popover-foreground: 60 3% 8%;
+  --muted: 45 20% 90%;
+
+  --border: 47 15% 87%;
+  --input: 47 15% 87%;
+
+  --foreground: 60 3% 8%;
+  --muted-foreground: 48 3% 36%;
+
+  /* Ink — the near-black used for primary actions and headings. */
+  --ink: 60 3% 8%;
+  --ink-hover: 60 4% 16%;
+  --ink-foreground: 48 33% 97%;
+
+  /* Ember — the one accent colour in the product. */
+  --primary: 15 63% 60%;
+  --primary-foreground: 48 33% 98%;
+  --accent: 14 55% 52%;
+  --accent-foreground: 48 33% 98%;
+
+  --secondary: 45 22% 89%;
+  --secondary-foreground: 60 3% 8%;
+
+  --destructive: 0 68% 46%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 160 84% 28%;
+  --success-foreground: 0 0% 100%;
+  --warning: 32 95% 38%;
+  --warning-foreground: 0 0% 100%;
+
+  --ring: 15 63% 60%;
+  --radius: 0.75rem;
+
+  --chart-1: 15 63% 55%;
+  --chart-2: 199 68% 40%;
+  --chart-3: 262 45% 55%;
+  --chart-4: 160 70% 32%;
+  --chart-5: 32 85% 45%;
+
+  --sidebar-background: 48 33% 97%;
+  --sidebar-foreground: 60 3% 8%;
+  --sidebar-primary: 15 63% 60%;
+  --sidebar-primary-foreground: 48 33% 98%;
+  --sidebar-accent: 45 22% 89%;
+  --sidebar-accent-foreground: 60 3% 8%;
+  --sidebar-border: 47 15% 87%;
+  --sidebar-ring: 15 63% 60%;
+
+  --viz-stop-1: 15 63% 55%;
+  --viz-stop-2: 45 20% 78%;
+  --viz-stop-3: 262 45% 55%;
+
+  --font-sans: var(--font-instrument-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-editorial-serif), Georgia, "Times New Roman", serif;
+}
+
+/* The landing story deliberately inverts to Noir for its narrative
+   sections. Scoping the same token names here means components dropped
+   inside a `.on-noir` block theme themselves correctly instead of needing
+   a parallel set of dark-only classes. */
+.on-noir {
+  --background: 165 39% 2%;
+  --surface: 165 20% 6%;
+  --card: 165 20% 6%;
+  --card-foreground: 43 43% 95%;
+  --popover: 165 20% 8%;
+  --popover-foreground: 43 43% 95%;
+  --foreground: 43 43% 95%;
+  --muted-foreground: 96 7% 79%;
+  --border: 43 30% 95%;
+  --ink: 43 43% 95%;
+  --ink-hover: 43 30% 88%;
+  --ink-foreground: 165 39% 2%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Serif is reserved for editorial lead paragraphs — the "a person wrote
+   this" voice, against Instrument Sans doing all the UI work. */
+.font-editorial {
+  font-family: var(--font-serif);
+}
+
+::selection {
+  background-color: hsl(var(--primary) / 0.25);
+}
+
+/* Consistent focus ring everywhere, including native controls. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: calc(var(--radius) - 4px);
+}
+
+/* Slim, unobtrusive scrollbars that match the paper ground rather than
+   the browser default grey. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--foreground) / 0.18) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--foreground) / 0.16);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--foreground) / 0.28);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 300ms ease-out both;
+}
+
+.animate-fade-up-d1 {
+  animation-delay: 60ms;
+}
+
+.animate-fade-up-d2 {
+  animation-delay: 120ms;
+}
+
+.animate-fade-up-d3 {
+  animation-delay: 180ms;
+}
+
+/* Skeleton shimmer — a moving highlight reads as "loading" far more
+   clearly than a pulsing block. */
+.skeleton {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--foreground) / 0.06) 25%,
+    hsl(var(--foreground) / 0.12) 37%,
+    hsl(var(--foreground) / 0.06) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Same shimmer, for a skeleton sitting on a dark surface (the camera
+   preview frame) — `.skeleton` builds its highlight from `--foreground`,
+   which is near-black in light mode, so on a near-black background it is
+   invisible. This builds the highlight from `--background` instead. */
+.skeleton-dark {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--background) / 0.08) 25%,
+    hsl(var(--background) / 0.18) 37%,
+    hsl(var(--background) / 0.08) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* The three-dot inline "in progress" indicator (LoadingDots) — staggered so
+   each dot rises a beat after the last, the standard "typing" cadence. */
+@keyframes loading-dot-bounce {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.loading-dot {
+  animation: loading-dot-bounce 1s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

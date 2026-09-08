@@ -1,0 +1,39 @@
+# Dependencies
+node_modules
+
+# Python
+**/venv
+__pycache__
+*.pyc
+*.db
+
+# Next.js
+web/.next/
+web/out/
+web/dist/
+
+# Environment
+.env
+.env*.local
+!.env.example
+!.env.local.example
+
+# OAuth client secrets (Google Cloud downloads these as client_secret_*.json)
+client_secret_*.json
+
+# Agora CLI local project binding
+.agora/
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AI/process docs (never publish)
+docs/superpowers/
